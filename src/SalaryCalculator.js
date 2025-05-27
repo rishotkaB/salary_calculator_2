@@ -106,20 +106,8 @@ const validateFields = (field, value) => {
 
 
 const handleChange = (field, value) => {
-  // Пропускаем только цифры
-  const cleaned = value.replace(/[^\d]/g, "");
-
-  // Если пользователь стёр всё — пусть будет пусто
-  if (cleaned === "") {
-    setFormData(prev => ({ ...prev, [field]: "" }));
-    validateFields(field, "");
-    return;
-  }
-
-  const intValue = parseInt(cleaned, 10);
-
-  setFormData(prev => ({ ...prev, [field]: intValue }));
-  validateFields(field, intValue);
+  setFormData(prev => ({ ...prev, [field]: value }));
+  validateFields(field, value);
 };
 
   const calculate = () => {
@@ -189,7 +177,7 @@ const handleChange = (field, value) => {
       <div className="max-w-3xl mx-auto p-4 space-y-6">
        <div className="flex flex-col items-center mb-6">
           <img src="/logotip_montazhnaja-oblast-1-2048x539.png" alt="Логотип Мосгортранс" className="h-24 mb-2" />
-          <h1 className="text-2xl font-bold text-[#0069B4] text-center">Цифровой калькулятор заработной платы</h1>
+          <h1 className="text-2xl font-bold text-[#0069B4] text-center">Расчёт заработной платы</h1>
         </div>
 
         <Card className="shadow-lg">
@@ -209,12 +197,10 @@ const handleChange = (field, value) => {
     <div key={field}>
       <label className="font-medium">{label}</label>
 <input
-  type="text"
-  inputMode="numeric"
-  pattern="[0-9]*"
-  className={`w-full border p-2 rounded ${errors[field] ? "border-red-500" : ""}`}
-  value={formData[field]}
-  onChange={e => handleChange(field, e.target.value)}
+  type="number"
+  className={`w-full border p-2 rounded ${errors[field] ? 'border-red-500' : ''}`}
+  value={formData[field] || ""}
+  onChange={e => handleChange(field, Math.round(parseInt(e.target.value.replace(/^0+/, '') || '0')))}
 />
 {errors[field] && (
   <p className="text-sm text-red-600 mt-1">{errors[field]}</p>
