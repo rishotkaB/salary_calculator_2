@@ -1,0 +1,10 @@
+@font-face {
+  font-family: "Moscow Sans";
+  src: url("/fonts/MoscowSans-Light.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "Moscow Sans", sans-serif;
+}
